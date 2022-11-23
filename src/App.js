@@ -1,22 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { useWeb3 } from "./hooks";
+import "./App.css";
 
 function App() {
+  const { account, loginStatus, login, logout, tokenBalance } = useWeb3();
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {!loginStatus ? (
+          <button onClick={login}>click to connect</button>
+        ) : (
+          <button onClick={logout}>click to disconnect</button>
+        )}
+        {loginStatus && account ? <p>{account[0]}</p> : null}
+        {loginStatus ? <p>{tokenBalance} fmt</p> : null}
       </header>
     </div>
   );
